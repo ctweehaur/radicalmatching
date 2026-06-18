@@ -1,41 +1,100 @@
-/* 卡片基础交互样式 */
-.card { 
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
-    cursor: grab; 
-    touch-action: none; /* 防止在 iPad 上拖拽时页面滚动 */
-}
-.card:hover { 
-    transform: scale(1.05); 
-}
-.card:active {
-    cursor: grabbing;
+/* 引入免费且适合儿童的卡通中文字体（站酷快乐体） */
+@import url('https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap');
+
+body {
+    /* 游戏风格的动态波点背景 */
+    background-color: #f0f9ff;
+    background-image: radial-gradient(#bae6fd 3px, transparent 3px);
+    background-size: 30px 30px;
+    font-family: 'ZCOOL KuaiLe', 'Comic Sans MS', sans-serif;
 }
 
-/* 匹配成功时，放置区的闪烁动画 */
+/* =========================================
+   3D 积木卡片样式 (偏旁区)
+========================================= */
+.card { 
+    cursor: grab; 
+    touch-action: none; 
+    /* 纯白边框 + 底部深色阴影营造 3D 按键感 */
+    border: 4px solid #ffffff;
+    box-shadow: 0 8px 0 #2563eb, 0 10px 15px rgba(0,0,0,0.1);
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+
+.card:hover { 
+    transform: translateY(-2px) scale(1.02); 
+    box-shadow: 0 10px 0 #2563eb, 0 15px 20px rgba(0,0,0,0.15);
+}
+
+/* 按下时的物理下陷效果 */
+.card:active, .card.is-dragging {
+    cursor: grabbing;
+    transform: translateY(8px) scale(0.98);
+    box-shadow: 0 0 0 #2563eb, 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* 匹配成功后，偏旁卡片隐藏时的过渡 */
+.card.matched {
+    opacity: 0;
+    transform: scale(0);
+    pointer-events: none;
+}
+
+/* =========================================
+   放置区样式 (汉字区)
+========================================= */
+.drop-zone {
+    min-height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.8);
+    /* 内部阴影，看起来像个凹槽 */
+    box-shadow: inset 0 4px 8px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+/* =========================================
+   动画特效
+========================================= */
 .animate-success-flash { 
     animation: flashSuccess 0.8s ease-out; 
 }
 @keyframes flashSuccess {
-    0%, 100% { background-color: white; border-color: #d1d5db; }
+    0%, 100% { background-color: rgba(255, 255, 255, 0.8); border-color: #d1d5db; transform: scale(1); }
+    30% { transform: scale(1.1); } /* 成功时稍微放大弹一下 */
     50% { background-color: #d1fae5; border-color: #10b981; }
 }
 
-/* 匹配成功时，星星跳出的动画 */
 .animate-star-pop { 
     animation: starPop 1.2s ease-out forwards; 
 }
 @keyframes starPop {
-    0% { transform: scale(0.5); opacity: 0; }
-    50% { transform: scale(1.3) rotate(15deg); opacity: 1; }
-    80% { transform: scale(1) rotate(0deg); opacity: 1; }
-    100% { transform: scale(1); opacity: 0; }
+    0% { transform: scale(0.5) translateY(0); opacity: 0; }
+    50% { transform: scale(1.5) translateY(-20px) rotate(20deg); opacity: 1; }
+    80% { transform: scale(1.2) translateY(-10px) rotate(0deg); opacity: 1; }
+    100% { transform: scale(1) translateY(-10px); opacity: 0; }
 }
 
-/* 放置区样式微调 */
-.drop-zone {
-    min-height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
+/* =========================================
+   糖果条纹进度条动画
+========================================= */
+.progress-candy {
+    background-image: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.3) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0.3) 75%,
+        transparent 75%,
+        transparent
+    );
+    background-size: 2rem 2rem;
+    animation: moveStripes 1s linear infinite;
+}
+
+@keyframes moveStripes {
+    from { background-position: 2rem 0; }
+    to { background-position: 0 0; }
 }
