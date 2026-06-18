@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>偏旁部首大挑战</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-blue-50 p-6">
+    <header class="text-center mb-10">
+        <h1 class="text-4xl font-bold text-blue-600">偏旁部首配对游戏</h1>
+    </header>
+
+    <main class="max-w-4xl mx-auto grid grid-cols-2 gap-12">
+        <div id="radicals" class="space-y-4"></div>
+        <div id="characters" class="space-y-4"></div>
+    </main>
+
+    <div class="max-w-4xl mx-auto mt-10">
+        <div class="flex justify-between text-sm text-gray-500 mb-2">
+            <span>闯关进度</span>
+            <span id="progress-text">0/5</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-6 overflow-hidden">
+            <div id="progress-bar" class="bg-gradient-to-r from-green-400 to-blue-500 h-6 w-0 transition-all duration-500"></div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
